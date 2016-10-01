@@ -1,0 +1,275 @@
+{% extends "generic-page.html" %}
+
+{% block head %}
+<script type="text/javascript" src="https://s3-sa-east-1.amazonaws.com/residoando/assets/jquery.tablesorter.js"></script> 
+{% endblock %}
+
+{% block style %}
+
+<style type="text/css">
+	body {
+	background: #fafafa url(http://jackrugile.com/images/misc/noise-diagonal.png);
+	color: #444;
+	font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
+	text-shadow: 0 1px 0 #fff;
+}
+
+strong {
+	font-weight: bold; 
+}
+
+em {
+	font-style: italic; 
+}
+
+table {
+	background: #f5f5f5;
+	border-collapse: separate;
+	box-shadow: inset 0 1px 0 #fff;
+	font-size: 12px;
+	line-height: 24px;
+	margin: 30px auto;
+	text-align: left;
+	width: 800px;
+}	
+
+th {
+	border-right: 1px solid #fff;
+	border-left: 1px solid #e8e8e8;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #e8e8e8;
+	padding: 10px 15px;
+	position: relative;
+	transition: all 300ms;
+  	font-weight: bold;
+  	text-align: center;	
+}
+
+td {
+	border-right: 1px solid #fff;
+	border-left: 1px solid #e8e8e8;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #e8e8e8;
+	padding: 10px 15px;
+	position: relative;
+	transition: all 300ms;
+	text-align: center;
+}
+
+tr {
+	background: url(http://jackrugile.com/images/misc/noise-diagonal.png);	
+}
+.mdl-cell .mdl-cell--4-col{
+	text-align: center;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+	<div class="mdl-grid">
+	  <div class="mdl-cell mdl-cell--1-col"></div>
+	  <div class="mdl-cell mdl-cell--10-col" style="background-color: #fff; box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.3);">
+	  	<div style="width: 100%;">
+			<div class="mdl-grid">
+			  <div class="mdl-cell mdl-cell--4-col"></div>
+			  <div class="mdl-cell mdl-cell--4-col">
+			  	<h4 style="margin: 0px; margin-top: 5px;">Cadastrar novo parceiro</h4>
+			  </div>
+			  <div class="mdl-cell mdl-cell--4-col"></div>
+			</div>
+			<form action="{% url 'new_company' %}" autocomplete="on" id="login_user" method="post" style="width: 100%;">
+				{% csrf_token %}
+
+				<div class="mdl-grid">
+				  <div class="mdl-cell mdl-cell--4-col">
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="company_name" class="mdl-textfield__input" required>
+						<label class="mdl-textfield__label">Nome da organização</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="company_type" id="tags" class="mdl-textfield__input" required>
+						<label class="mdl-textfield__label">Tipo da organização</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="phone" class="mdl-textfield__input">
+						<label class="mdl-textfield__label">Telefone</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="email" class="mdl-textfield__input">
+						<label class="mdl-textfield__label">Email</label>
+					</div>
+
+				  </div>
+				  <div class="mdl-cell mdl-cell--4-col">
+				  	
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="city" id="tags-city" class="mdl-textfield__input" required>
+						<label class="mdl-textfield__label">Cidade</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="state" id="tags-state" class="mdl-textfield__input" required>
+						<label class="mdl-textfield__label">Estado</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="neighborhood" id="tags-neighborhood" class="mdl-textfield__input" required>
+						<label class="mdl-textfield__label">Bairro</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="address" class="mdl-textfield__input" required>
+						<label class="mdl-textfield__label">Endereço</label>
+					</div>
+
+				  </div>
+				  <div class="mdl-cell mdl-cell--4-col">
+				  	
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="website" class="mdl-textfield__input">
+						<label class="mdl-textfield__label">Website</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="cnpj" class="mdl-textfield__input">
+						<label class="mdl-textfield__label">CNPJ</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="latitude" class="mdl-textfield__input" required>
+						<label class="mdl-textfield__label">Latitude</label>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input type="text" name="longitude" class="mdl-textfield__input" required>
+						<label class="mdl-textfield__label">Longitude</label>
+					</div>
+
+				  </div>
+				</div>
+				<div class="mdl-grid">
+				  <div class="mdl-cell mdl-cell--4-col"></div>
+				  <div class="mdl-cell mdl-cell--4-col">
+					<button type="submit" class="button buttonBlue" value="submit">Cadastrar
+						<div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+					</button>  	
+				  </div>
+				  <div class="mdl-cell mdl-cell--4-col"></div>
+				</div>
+			</form>
+
+			<div class="mdl-grid">
+			  <div class="mdl-cell mdl-cell--1-col"></div>
+			  <div class="mdl-cell mdl-cell--10-col" style="text-align: center;">
+			  	<h4>Ou então faça upload de um CSV</h4>
+			  	<p><strong>ATENÇÂO</strong></p>
+			  	<p>O CSV deve ter como delimitador o caracter "&"</p>
+			  	<p>Não coloque cabeçalho no CSV indicando o que é cada coluna</p>
+			  	<p>Todos os campos vazios devem ser preenchidos com "-"</p>
+			  	<p>Um CSV de exemplo pode ser baixado <a href="https://s3-sa-east-1.amazonaws.com/residoando/dump_company.csv">AQUI</a> (Não se esqueça que o delimitador é "&")</p>
+			  </div>
+			  <div class="mdl-cell mdl-cell--1-col"></div>
+			</div>
+
+			<form action="{% url 'new_company_csv' %}" autocomplete="on" id="login_user" method="post" style="width: 100%;" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="mdl-grid">
+				  <div class="mdl-cell mdl-cell--4-col"></div>
+				  <div class="mdl-cell mdl-cell--2-col">
+				  	<input type="file" name="csv_file" value="csv_file" accept=".csv">
+				  </div>
+				  <div class="mdl-cell mdl-cell--2-col">
+					<button type="submit" class="button buttonBlue" value="submit">Subir
+						<div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+					</button>  
+				  </div>
+				  <div class="mdl-cell mdl-cell--4-col"></div>
+				</div>
+			</form>
+
+	  	</div>
+	  </div>
+	  <div class="mdl-cell mdl-cell--1-col"></div>
+	</div>
+	<div class="mdl-grid">
+	  <div class="mdl-cell mdl-cell--1-col"></div>
+	  <div class="mdl-cell mdl-cell--10-col">
+		 <table style="width:100%" id="myTable" class="tablesorter">
+			 <thead> 
+				<tr>
+					<th>Nome</th>
+					<th>Tipo</th>
+					<th>ID</th>
+					<th>Telefone</th>
+					<th>Email</th>
+					<th>Endereço</th>
+					<th>Cidade</th>
+				</tr>
+			</thead> 
+			<tbody>
+		 	{% for item in company_index %}
+			  <tr>
+			    <td>{{ item.organization_name }}</td>
+			    <td>{{ item.organization_type }}</td>
+			    <td>{{ item.id }}</td>
+			    <td>{{ item.phone }}</td>
+			    <td>{{ item.email }}</td>
+			    <td>{{ item.address }}</td>
+			    <td>{{ item.city }}</td>
+			  </tr>
+		    {% endfor %}
+		    </tbody>
+		</table> 
+	  </div>
+	  <div class="mdl-cell mdl-cell--1-col"></div>
+	</div>
+
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+	$( function() {
+		var availableTags = [{{ tags_type|safe }}];
+		$( "#tags" ).autocomplete({
+		  source: availableTags
+		});
+	} );
+
+	$( function() {
+		var availableTags = [{{ tags_city|safe }}];
+		$( "#tags-city" ).autocomplete({
+		  source: availableTags
+		});
+	} );
+
+	$( function() {
+		var availableTags = [{{ tags_state|safe }}];
+		$( "#tags-state" ).autocomplete({
+		  source: availableTags
+		});
+	} );
+
+	$( function() {
+		var availableTags = [{{ tags_neighborhood|safe }}];
+		$( "#tags-neighborhood" ).autocomplete({
+		  source: availableTags
+		});
+	} );
+
+	$(document).ready(function() 
+		{ 
+		    $("#myTable").tablesorter(); 
+		} 
+	);
+
+  </script>
+
+{% endblock %}

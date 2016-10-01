@@ -1,0 +1,80 @@
+{% extends "dashboard.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content-dashboard %}
+    <div id="map-result" style="width: 90%; height: 72vh; margin: auto; margin-top: 15px;"></div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+  function initMap() {
+    var bounds = new google.maps.LatLngBounds();
+    var myLatLng = {lat: -23.5489, lng: -46.6388};
+    var loc;
+
+      var styleArray = [
+        {
+          featureType: 'all',
+          stylers: [
+            { saturation: -50 }
+          ]
+        },{
+          featureType: 'road.arterial',
+          elementType: 'geometry',
+          stylers: [
+            { hue: '#00ffee' },
+            { saturation: 50 }
+          ]
+        },{
+          featureType: 'poi.business',
+          elementType: 'labels',
+          stylers: [
+            { visibility: 'off' }
+          ]
+        }
+      ];
+
+    // Create a map object and specify the DOM element for display.
+    var map = new google.maps.Map(document.getElementById('map-result'), {
+      center: myLatLng,
+      scrollwheel: true,
+      zoom: 13,
+      styles: styleArray
+    });
+
+    latitude = [];
+    longitude = [];
+    {% for item in searches %}
+        latitude[{{ item.id }}] = {{ item.latitude }};
+        longitude[{{ item.id }}] = {{ item.longitude }};
+    {% endfor %}
+
+    for (i = 0; i < latitude.length; i++) { 
+
+        marker = new google.maps.Marker({
+             position: new google.maps.LatLng(latitude[i], longitude[i]),
+             map: map,
+             // icon: 'https://s3-sa-east-1.amazonaws.com/residoando/icon-1.png'
+        });
+        if (i > 0) {
+            loc = new google.maps.LatLng(latitude[i].toString(), longitude[i].toString());
+            bounds.extend(loc);
+        }
+
+    }
+    map.fitBounds(bounds);
+    map.panToBounds(bounds);
+
+  }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhx18jDGJ7H-ywCkTk_3c29u9uOgEzFi8&callback=initMap" async defer></script>
+
+{% endblock %}

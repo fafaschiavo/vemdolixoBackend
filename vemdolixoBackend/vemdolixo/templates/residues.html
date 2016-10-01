@@ -1,0 +1,22 @@
+{% extends "generic-page.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+
+	<div class="mdl-layout__tab-bar mdl-js-ripple-effect" style="margin: auto; height: 48px; background-color: #fff;">
+	  <a href="{% url 'residues' %}" class="mdl-layout__tab">Rank de similaridade</a>
+	  <a href="{% url 'search_map' %}" class="mdl-layout__tab">Machine learning advisor</a>
+	</div>
+
+	{% block content-residues %}
+	{% endblock %}
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

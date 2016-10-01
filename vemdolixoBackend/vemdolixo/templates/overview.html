@@ -1,0 +1,176 @@
+{% extends "dashboard.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content-dashboard %}
+<div id="container" style="width: 90%; min-width: 310px; height: 400px; margin: 0 auto; margin-top: 15px;"></div>
+<div id="container2" style="width: 90%; min-width: 310px; height: 400px; margin: 0 auto; margin-top: 15px;"></div>
+<div id="container3" style="width: 90%; min-width: 310px; height: 400px; margin: 0 auto; margin-top: 15px;"></div>
+<div id="container4" style="width: 90%; min-width: 310px; height: 400px; margin: 0 auto; margin-top: 15px;"></div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+    	colors: ['#77ff33'],
+        title: {
+            text: 'Total de Buscas',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: www.VemDoLixo.com',
+            x: -20
+        },
+        xAxis: {
+            categories: [{{ search_series_to_chart|safe }}]
+        },
+        yAxis: {
+            title: {
+                text: 'Quantidade de buscas'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#000'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Quantidade',
+            data: [{{ search_total_to_chart|safe }}]
+        }]
+    });
+});
+
+$(function () {
+    $('#container2').highcharts({
+        title: {
+            text: 'Buscas Diárias',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: www.VemDoLixo.com',
+            x: -20
+        },
+        xAxis: {
+            categories: [{{ search_series_to_chart|safe }}]
+        },
+        yAxis: {
+            title: {
+                text: 'Quantidade de buscas'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Quantidade',
+            data: [{{ search_amount_to_chart|safe }}]
+        }]
+    });
+});
+
+$(function () {
+    $('#container3').highcharts({
+    	colors: ['#77ff33'],
+        title: {
+            text: 'Total de Usuários',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: www.VemDoLixo.com',
+            x: -20
+        },
+        xAxis: {
+            categories: [{{ register_series_to_chart|safe }}]
+        },
+        yAxis: {
+            title: {
+                text: 'Quantidade de registros'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#000'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Quantidade',
+            data: [{{ register_total_to_chart|safe }}]
+        }]
+    });
+});
+
+$(function () {
+    $('#container4').highcharts({
+        title: {
+            text: 'Novos usuários por dia',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: www.VemDoLixo.com',
+            x: -20
+        },
+        xAxis: {
+            categories: [{{ register_series_to_chart|safe }}]
+        },
+        yAxis: {
+            title: {
+                text: 'Quantidade de buscas'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Quantidade',
+            data: [{{ register_amount_to_chart|safe }}]
+        }]
+    });
+});
+</script>
+{% endblock %}
