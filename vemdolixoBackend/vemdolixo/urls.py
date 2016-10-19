@@ -17,5 +17,7 @@ urlpatterns = [
     url(r'^search-map/$', views.search_map, name='search_map'),
     url(r'^residues/$', views.residues, name='residues'),
     url(r'^similarity-rank-result/$', views.similarity_rank_result, name='similarity_rank_result'),
+    url(r'^machine-learning-advisor/$', views.machine_learning_advisor, name='machine_learning_advisor'),
+    url(r'^machine-learning-associoation/$', views.machine_learning_associoation, name='machine_learning_associoation'),
     url(r'^$', views.index, name='index'),
 ]

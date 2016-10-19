@@ -1,0 +1,75 @@
+{% extends "residues.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content-residues %}
+<div  style="margin: auto; background-color: #fff; padding: 15px; width: 50%; margin-top: 15px; text-align: center;">
+	<table style="width:100%">
+	  <tr>
+	  	{% for item in uncategorized %}
+	    	<td>{{ item }}</td>
+	  	{% endfor %}
+	  </tr>
+	  <tr>
+	  	{% for item in uncategorized %}
+	    	<td>
+				<select name="cars" style="width: 40%;">
+				  	{% for item2 in residues %}
+						<option value="{{ item2.id }}">{{ item2.residue_name }}</option>
+				  	{% endfor %}
+				</select>
+				<button class="send-button" style="width: 30%;">Enviar</button>
+				<label class="ok" style="display: none; width: 30%; color: green;">Ok!</label>
+				<label class="error" style="display: none; width: 30% color: red;">Erro!</label>
+	    	</td>
+	  	{% endfor %}
+	  </tr>
+	</table>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+	$("table").each(function() {
+        var $this = $(this);
+        var newrows = [];
+        $this.find("tr").each(function(){
+            var i = 0;
+            $(this).find("td").each(function(){	
+                i++;
+                if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+                newrows[i].append($(this));
+            });
+        });
+        $this.find("tr").remove();
+        $.each(newrows, function(){
+            $this.append(this);
+        });
+    });
+
+	$(".send-button").click(function() {
+		var td_clicked = $(this).closest("td");
+		residue_id = $(this).closest("td").find("select").val();
+		term = $(this).closest("tr").find("td:first").text();
+
+		$.ajax({
+		    url: "{% url 'machine_learning_associoation' %}",
+		    type: 'get',
+		    data: { residue_id: residue_id, term : term},
+		    success: function(data) {
+		        td_clicked.find(".ok").css("display", "inline");
+		        td_clicked.find(".error").css("display", "none");
+		    },
+		    failure: function(data) { 
+		        td_clicked.find(".ok").css("display", "none");
+		        td_clicked.find(".error").css("display", "inline");
+		    }
+		});
+
+	});
+</script>
+{% endblock %}

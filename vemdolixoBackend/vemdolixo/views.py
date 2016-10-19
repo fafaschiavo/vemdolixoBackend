@@ -434,3 +434,42 @@ def similarity_rank_result(request):
 		'score_array_to_table': score_array,
 	}
 	return render(request, 'similarity-rank-result.html', context)
+
+@login_required
+def machine_learning_advisor(request):
+	username = request.user
+	result = members.objects.filter(username = username)
+	residues = residue.objects.all()
+	searches = search_history.objects.all()
+	user = result[0]
+
+	uncategorized = {}
+	for search in searches:
+		score_array = rank_string_similarity(search.text)
+		if score_array[0] <  0.57:
+			reload(sys)
+			sys.setdefaultencoding('UTF8')
+			uncategorized[search.text] = score_array[0]
+
+	context = {
+		'user_email': user.email,
+		'user_picture': user.profile_picture,
+		'user_name': user.first_name,
+		'uncategorized': uncategorized,
+		'residues': residues,
+	}
+	return render(request, 'machine-learning-advisor.html', context)
+
+def machine_learning_associoation(request):
+	residue_id = request.GET['residue_id']
+	term = request.GET['term']
+
+	try:
+		association = residue_association.objects.get(term = term)
+		association.residue_id = residue_id
+		association.save()
+	except:
+		association = residue_association(term = term, residue_id = residue_id)
+		association.save()
+
+	return HttpResponse(200)
